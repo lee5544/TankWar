@@ -47,7 +47,7 @@ void Class_GameWindow::play()
 			//	}
 			//}
 			renewBullets();
-			renewPic();//刷新画面
+			renewPic(0);//刷新画面
 		}
 		Sleep(RenewClock / 3);
 
@@ -56,7 +56,7 @@ void Class_GameWindow::play()
 		now = timeGetTime();
 		if (now - stage_timer >= 5000)
 		{
-			map.ChangeStage(rand() % 35 + 1);
+			//map.ChangeStage(rand() % 35 + 1);
 			unit->SetArmorLev((Armor)(rand() % ArmorCount));
 			stage_timer = now;
 		}
