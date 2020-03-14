@@ -145,19 +145,19 @@ void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 		int count = 0;//保存当前按下按键的个数
 
 		//记录按键状态
-		if (KEY_DOWN(Key_DOWN))
+		if (KEY_DOWN(Key_DOWN)||KEY_DOWN(KeyDown))
 		{
 			key_state[DOWN] = true;
 		}
-		if (KEY_DOWN(Key_UP))
+		if (KEY_DOWN(Key_UP)||KEY_DOWN(KeyUp))
 		{
 			key_state[UP] = true;
 		}
-		if (KEY_DOWN(Key_LEFT))
+		if (KEY_DOWN(Key_LEFT)||KEY_DOWN(KeyLeft))
 		{
 			key_state[LEFT] = true;
 		}
-		if (KEY_DOWN(Key_RIGHT))
+		if (KEY_DOWN(Key_RIGHT)||KEY_DOWN(KeyRight))
 		{
 			key_state[RIGHT] = true;
 		}
@@ -186,6 +186,7 @@ void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 
 		//控制炮弹发射
 		if (KEY_DOWN(Key_SHOOT))
+		if (KEY_DOWN(Key_SHOOT)||KEY_DOWN(KeyShoot))
 		{
 			const int shoot_cd = 100;//射击CD
 			static DWORD shoot_timer = timeGetTime() - shoot_cd;

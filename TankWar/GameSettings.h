@@ -91,6 +91,12 @@ enum Key//键盘控制
 	Key_SHOOT = 'J', Key_PAUSE = 'P',
 	Key_START = 'F', Key_SELECT = 'R',
 	Key_ESC = VK_ESCAPE
+	Key_ESC = VK_ESCAPE,
+
+	KeyUp = VK_UP, KeyDown = VK_DOWN,
+	KeyLeft = VK_LEFT, KeyRight = VK_RIGHT,
+	KeyShoot = VK_SPACE,//空格键发射炮弹
+	KeyChangeStage = VK_RETURN//Enter控制切换关卡
 };
 
 // 提取指定模块中的资源文件
