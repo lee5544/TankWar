@@ -90,23 +90,6 @@ void Class_GameWindow::renewPic(bool effects)
 
 void Class_GameWindow::renewBullets()
 {
-	//for (size_t i = 0; i < bullets.size(); i++)
-	//{
-	//	if (bullets[i].renewXYPos())//如果补帧完成
-	//	{
-	//		//让子弹移动
-	//		if (bullets[i].move(bullets[i].GetDirection(), map))//如果移动后有体积碰撞
-	//		{
-	//			if (bullets[i].GetOwner() == P1)
-	//			{
-	//				p1_bullet_count--;
-	//			}
-	//			//删除这枚炮弹
-	//			bullets.erase(bullets.begin() + i);
-	//			i--;//发生删除时，容器中的元素数量会变少
-	//		}
-	//	}
-	//}
 	if (!bullets.empty())
 	{
 		for (auto it = bullets.begin(); it != bullets.end();)
@@ -170,6 +153,7 @@ void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 				count++;
 			}
 		}
+
 		//如果只有一个键按下，移动坦克
 		if (count == 1)
 		{
@@ -185,7 +169,6 @@ void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 		}
 
 		//控制炮弹发射
-		if (KEY_DOWN(Key_SHOOT))
 		if (KEY_DOWN(Key_SHOOT)||KEY_DOWN(KeyShoot))
 		{
 			const int shoot_cd = 100;//射击CD

@@ -90,7 +90,6 @@ enum Key//键盘控制
 	Key_UP = 'W', Key_LEFT = 'A', Key_RIGHT = 'D', Key_DOWN = 'S',
 	Key_SHOOT = 'J', Key_PAUSE = 'P',
 	Key_START = 'F', Key_SELECT = 'R',
-	Key_ESC = VK_ESCAPE
 	Key_ESC = VK_ESCAPE,
 
 	KeyUp = VK_UP, KeyDown = VK_DOWN,
