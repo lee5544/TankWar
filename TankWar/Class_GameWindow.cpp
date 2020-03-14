@@ -133,6 +133,8 @@ void Class_GameWindow::renewBullets()
 	}
 }
 
+int Stage = 1;//设置当前关卡为第一关
+
 void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 {
 	UnitType type = unit.GetType();
@@ -193,6 +195,20 @@ void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 				shoot_timer = now;
 				shoot(unit);
 			}
+		}
+		
+		//控制切换关卡
+		if (KEY_DOWN(KeyChangeStage))
+		{
+			Sleep(1000);//软件消抖
+			Stage++;
+			if (Stage <= max_stage)
+				map.ChangeStage(Stage);
+			else
+			{
+				map.ChangeStage(1);
+				Stage = 1;
+			}		
 		}
 	}
 }
