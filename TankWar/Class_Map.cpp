@@ -165,7 +165,8 @@ void Class_Map::loadmap(unsigned int stage)
 	//调整文件读取位置，如果玩家玩到35关以后，就从第一关地图开始
 	stage -= 1;
 	stage = stage % max_stage;
-	map_file.seekg(stage * map_row * map_col * 3 + stage);//文件定位到指定字节（CRLF回车换行，所以要加stage）
+	//map_file.seekg(stage * map_row * map_col * 3 + stage);//文件定位到指定字节（CRLF回车换行，所以要加stage）
+	map_file.seekg(stage * map_row * map_col * 3);
 
 	int num_temp;//暂存文件读取的整数，
 	for (size_t row = 0; row < map_row; row++)
