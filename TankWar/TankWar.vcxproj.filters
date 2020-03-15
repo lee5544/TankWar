@@ -14,13 +14,13 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="资源文件\ICON">
-      <UniqueIdentifier>{2c674e17-b1f3-42f3-8c0a-0414c9ee7d72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="资源文件\IMAGE">
-      <UniqueIdentifier>{ef296350-bf54-4f05-872c-ce3442e8d429}</UniqueIdentifier>
+      <UniqueIdentifier>{ea06f127-f390-468b-b21e-898e175c0929}</UniqueIdentifier>
     </Filter>
     <Filter Include="资源文件\MAP">
-      <UniqueIdentifier>{dea1fbcb-6713-445f-ae8c-6486ba47d3f8}</UniqueIdentifier>
+      <UniqueIdentifier>{af7e1dec-1a0e-4d19-ab7a-7cd80f5df804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\IMAGE">
+      <UniqueIdentifier>{8b91af37-1c3d-40be-8a4a-8f0b7f0e5b13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +40,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Class_Tank.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Class_Unit.h">
@@ -69,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Class_Tank.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Class_Unit.cpp">

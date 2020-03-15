@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{7F201CED-FC31-4071-8ACC-A370B7FD75DC}</ProjectGuid>
+    <ProjectGuid>{12D0A4AC-E512-45F5-A39D-2BF69FB900FB}</ProjectGuid>
     <RootNamespace>TankWar</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -29,7 +29,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,7 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -89,7 +89,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,6 +129,7 @@
     <ClInclude Include="Class_Map.h" />
     <ClInclude Include="Class_Player.h" />
     <ClInclude Include="Class_Tank.h" />
+    <ClInclude Include="Class_Timer.h" />
     <ClInclude Include="Class_Unit.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="resource.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Class_Map.cpp" />
     <ClCompile Include="Class_Player.cpp" />
     <ClCompile Include="Class_Tank.cpp" />
+    <ClCompile Include="Class_Timer.cpp" />
     <ClCompile Include="Class_Unit.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
