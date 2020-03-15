@@ -2,16 +2,17 @@
 #include <Windows.h>
 #include "Class_GameWindow.h"
 
-int main()
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+//int main()
 {
-	printf("\n\n正在加载游戏，请稍候...\n");
+	//printf("\n\n正在加载游戏，请稍候...\n");
 	Class_GameWindow* game = new Class_GameWindow;
 	game->play();
 	delete game;
-	system("cls");
-	printf("\n\n已退出游戏。\n\n牛B闪闪坦克大战视频链接（附源码下载）：https://www.bilibili.com/video/av71261823/ \n\n\n\n");
+	//system("cls");
+	//printf("\n\n已退出游戏。\n\n牛B闪闪坦克大战视频链接（附源码下载）：https://www.bilibili.com/video/av71261823/ \n\n\n\n");
 	
-	system("pause");
+	//system("pause");
 	return 0;
 }
 
