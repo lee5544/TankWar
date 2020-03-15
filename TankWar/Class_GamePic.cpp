@@ -451,7 +451,7 @@ void Class_GamePic::drawLogo(bool effect)
 	//输出其它信息
 	RECT rect;//一个矩形
 	rect = { 0,16 * source_map_px,source_gamewindow_width - 1,(16 + 3) * source_map_px - 1 };
-	drawtext(_T("按Enter进入坦克！"), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);//设置显示内容单行、水平垂直居中
+	drawtext(_T("按Shift进入坦克！"), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);//设置显示内容单行、水平垂直居中
 }
 
 void Class_GamePic::addBoomPoint(const Pos_XY& pos, bool state)
@@ -546,7 +546,7 @@ void Class_GamePic::drawMap(const MapInt(*map)[map_row][map_col])
 
 	//额外信息
 	RECT r = { 2 * source_map_px - 1, 0, 20 * source_map_px - 1, 2 * source_map_px - 1 };
-	drawtext(_T("ESC=退出 Shift=切换关卡 P=暂停 "), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
+	drawtext(_T("ESC=退出 Enter=切换关卡 P=暂停 "), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	r = { 2 * source_map_px - 1 ,28 * source_map_px - 1 ,28 * source_map_px - 1 ,30 * source_map_px - 1 };
 	drawtext(_T("wasd或上下左右=方向控制 J或Space=开火"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_EXPANDTABS);
 	
