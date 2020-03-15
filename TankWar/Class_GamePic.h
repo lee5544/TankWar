@@ -22,7 +22,7 @@ enum MapFileNum//图片文件编号
 const unsigned int boom_pic_count = 5;//总的爆炸贴图数目
 const unsigned int small_boom_count = 3;//小型爆炸需要用到的图片数量
 const unsigned int big_boom_count = boom_pic_count;//大型爆炸需要用到的图片数量
-const unsigned int avr_pic_time = 60;//平均每张图片的显示时间
+const unsigned int avr_pic_time = 90;//平均每张图片的显示时间
 const unsigned int small_boom_time = small_boom_count * avr_pic_time;//小型爆炸持续的时间
 const unsigned int big_boom_time = big_boom_count * avr_pic_time;//大型爆炸持续的时间
 typedef struct//爆炸贴图需要的数据
@@ -32,10 +32,9 @@ typedef struct//爆炸贴图需要的数据
 	DWORD add_time;//记录该爆炸点的时间（根据时间选择绘制图片）
 	Pos_XY pos;//记录爆炸绘图坐标
 }BoomPoint;
-
 enum BossState//BOSS的状态
 {
-	BossAlive,BossDead,BossStateCount
+	BossAlive, BossDead, BossStateCount
 };
 
 //图片管理类
@@ -58,6 +57,8 @@ public:
 	void drawBullet(Class_Bullet& bullet);
 	//绘制爆炸贴图
 	void drawBooms();
+	//绘制logo图片
+	void drawLogo(bool effect = true);
 
 	/******************
 	爆炸贴图相关接口
@@ -82,6 +83,8 @@ protected:
 	void drawSea(int x, int y);
 	//刷新爆炸点的容器数据（超过显示时间的节点需要删除）
 	void renewBoomPoints();
+	//用一个图像填充另一个图形对象
+	void fill_image(IMAGE& dstimg, const IMAGE& srcimg);
 
 private:
 	IMAGE tankPic[CampCount][ArmorCount][DirectionCount][2];//坦克图片，角标从左到右分别为：阵营、装甲等级、方向、履带切换
@@ -89,6 +92,7 @@ private:
 	IMAGE bulletPic[DirectionCount];//子弹图片
 	IMAGE boomPic[boom_pic_count];//爆炸贴图
 	IMAGE bossPic[BossStateCount];//BOSS图片
+	IMAGE logoPic;//保存logo
 
 	//经过处理的图片素材
 	IMAGE tankPic_effects[CampCount][ArmorCount][DirectionCount][2];
@@ -96,9 +100,9 @@ private:
 	IMAGE bulletPic_effects[DirectionCount];
 	IMAGE boomPic_effects[boom_pic_count];
 	IMAGE bossPic_effects[BossStateCount];
+	IMAGE logoPic_effects;
 
 	float bkHSL[3];//保存背景色HSL模型颜色数据
 	float fontHSL[3];//文字颜色
 	vector<BoomPoint> boom_points;//保存所有的爆炸点数据
 };
-

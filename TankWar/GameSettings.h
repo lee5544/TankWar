@@ -78,6 +78,14 @@ enum MapType//地图类型
 	SEA,//海面
 	ICE = 0x21,//冰面
 	JUNGLE,//丛林
+	HEADQUARTERS_UL = 0xC8,
+	HEADQUARTERS_DL = 0xC9,
+	HEADQUARTERS_UR = 0xCA,
+	HEADQUARTERS_DR = 0xCB,
+	HEADQUARTERS_UL_FAIL = 0xCC,
+	HEADQUARTERS_DL_FAIL,
+	HEADQUARTERS_UR_FAIL,
+	HEADQUARTERS_DR_FAIL
 };
 enum UnitType//各单位类型值，用于碰撞检测
 {
@@ -100,13 +108,13 @@ enum Key//键盘控制
 {
 	Key_UP = 'W', Key_LEFT = 'A', Key_RIGHT = 'D', Key_DOWN = 'S',
 	Key_SHOOT = 'J', Key_PAUSE = 'P',
-	Key_START = 'F', Key_SELECT = 'R',
+	Key_START = VK_RETURN, Key_SELECT = 'R',
 	Key_ESC = VK_ESCAPE,
 
 	KeyUp = VK_UP, KeyDown = VK_DOWN,
 	KeyLeft = VK_LEFT, KeyRight = VK_RIGHT,
 	KeyShoot = VK_SPACE,//空格键发射炮弹
-	KeyChangeStage = VK_RETURN//Enter控制切换关卡
+	KeyChangeStage = VK_SHIFT//Shift控制切换关卡
 };
 
 // 提取指定模块中的资源文件
