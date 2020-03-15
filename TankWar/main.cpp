@@ -7,7 +7,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
 	//printf("\n\n正在加载游戏，请稍候...\n");
 	Class_GameWindow* game = new Class_GameWindow;
-	game->play();
+	game->gameWindow();
+	//game->play();
 	delete game;
 	//system("cls");
 	//printf("\n\n已退出游戏。\n\n牛B闪闪坦克大战视频链接（附源码下载）：https://www.bilibili.com/video/av71261823/ \n\n\n\n");

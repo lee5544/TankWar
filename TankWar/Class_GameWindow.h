@@ -38,5 +38,6 @@ protected:
 	void shoot(const Class_Unit& tank);
 	//改变地形
 	void changeMap(const Class_Bullet& bullet);
+	void renewStartPic();//刷新游戏开始界面
 };
 

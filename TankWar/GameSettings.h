@@ -33,6 +33,11 @@ const Int map_col = 32;
 const Int unit_row = map_row * 2;
 const Int unit_col = map_col * 2;
 
+//游戏初始化界面宽和高
+const Int source_gamewindow_width = source_map_px * map_col;
+const Int source_gamewindow_height = source_map_px * map_row;
+const Int gamewindow_width = map_px * map_col;
+const Int gamewindow_height = map_px * map_row;
 //游戏界面的宽和高（像素）
 const Int map_wide = map_px * map_col;
 const Int map_height = map_px * map_row;
@@ -40,6 +45,12 @@ const Int map_height = map_px * map_row;
 const Int unit_size = 4;//每个单元在unit矩阵中占用的宽度（坦克长宽为4，炮弹为2）
 const Int bullet_size = unit_size / 2;
 const Int unit_sizeInMap = unit_size / 2;
+
+/*********************
+游戏开始界面的相关参数
+**********************/
+const Int logo_row = 14;//logo图片占用的地图行数
+const Int logo_col = 2 * logo_row;//logo图片占用的地图列数
 
 /*******************************
 物体移动速度、画面刷新速率等设置

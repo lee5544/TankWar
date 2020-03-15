@@ -1,59 +1,69 @@
 ﻿#include "Class_GameWindow.h"
+#include "Class_Timer.h"
 
 //void HpSleep(int ms);
 
 Class_GameWindow::Class_GameWindow()
-	:p1_bullet_count(0)
+	:p1_bullet_count(0), game_state(false)
 {
+	Class_Timer::initGameTimer();//初始化游戏时钟
+}
+
+void Class_GameWindow::gameWindow()
+{
+	while (true)
+	{
+		//如果按下ESC，退出游戏
+		if (KEY_DOWN(Key_ESC))
+		{
+			HWND wnd = GetHWnd();
+			int button = MessageBox(wnd, _T("确认退出游戏？"), _T("退出游戏"), MB_YESNO | MB_ICONQUESTION);
+			if (button == IDYES)
+			{
+				break;
+			}
+			if (button == IDNO)
+			{
+				//点击取消会回到游戏，计时应重新开始（去掉中间暂停的时间）
+				Class_Timer::renewSysClk();
+			}
+		}
+		play();
+		//使用游戏专用的延时函数，精准延时为每一帧的间隔
+		Class_Timer::GameSleep(RenewClock);
+	}
 }
 
 void Class_GameWindow::play()
 {
 	Class_Unit* unit = &p1;//使用指针实现多态调用
+	static DWORD pic_timer = Class_Timer::GetGameTime();//控制图像刷新时间
+	DWORD now = Class_Timer::GetGameTime();
 
-	//bullet = new Class_Bullet(*unit);//测试用
-
-	while (true)
+	if (game_state)
 	{
-		static DWORD pic_timer = timeGetTime();//控制图像刷新时间
-		DWORD now = timeGetTime();
-
-		//如果按下ESC，退出游戏
-		if (KEY_DOWN(Key_ESC))
+		//检查暂停按钮
+		if (KEY_DOWN(Key_PAUSE))
 		{
-			break;
+			HWND wnd = GetHWnd();
+			int button = MessageBox(wnd, _T("继续游戏？"), _T("游戏暂停"), MB_RIGHT | MB_ICONINFORMATION);
+			Class_Timer::renewSysClk();
 		}
 
-		//如果到了刷新画面的时间，就执行绘制操作
-		if (now - pic_timer >= RenewClock)
+		//如果处于游戏状态，需要控制游戏中物体的刷新
+		unit = &p1;
+		if (unit)
 		{
-			pic_timer = now;
-			unit = &p1;
-			if (unit)
+			if (unit->renewXYPos())
 			{
-				if (unit->renewXYPos())
-				{
-					ctrl(*unit, map);
-				}
+				ctrl(*unit, map);
 			}
-
-			//测试用
-			//unit = bullet;
-			//if (unit)
-			//{
-			//	if (unit->renewXYPos())
-			//	{
-			//		ctrl(*unit, map);
-			//	}
-			//}
-			renewBullets();
-			renewPic(0);//刷新画面
 		}
-		Sleep(RenewClock / 3);
+		renewBullets();
 
 		//测试语句（恶搞版），内有关卡切换、坦克形态切换
-		static DWORD stage_timer = timeGetTime();//控制关卡刷新时间
-		now = timeGetTime();
+		static DWORD stage_timer = Class_Timer::GetGameTime();//控制关卡刷新时间
+		now = Class_Timer::GetGameTime();
 		if (now - stage_timer >= 5000)
 		{
 			//map.ChangeStage(rand() % 35 + 1);
@@ -61,6 +71,12 @@ void Class_GameWindow::play()
 			stage_timer = now;
 		}
 	}
+	else if (KEY_DOWN(Key_START) && !game_state)
+	{
+		//如果当前游戏没开始，且按下了游戏开始按钮，进入游戏
+		game_state = !game_state;
+	}
+	renewPic(0);//刷新画面
 }
 
 void Class_GameWindow::renewPic(bool effects)
@@ -73,6 +89,25 @@ void Class_GameWindow::renewPic(bool effects)
 	}
 
 	cleardevice();//清屏
+	//如果游戏没开始，绘制选择界面
+	if (game_state == 0)
+	{
+		renewStartPic();
+	}
+	else
+	{
+		renewGamePic();
+	}
+	FlushBatchDraw();//显示到屏幕
+}
+
+void Class_GameWindow::renewStartPic()
+{
+	pictures.drawLogo(0);
+}
+
+void Class_GameWindow::renewGamePic()
+{
 	pictures.drawMap(map.GetAVal());//绘制地图
 	if (!bullets.empty())//绘制炮弹
 	{
@@ -84,19 +119,34 @@ void Class_GameWindow::renewPic(bool effects)
 	pictures.drawTank(p1);//绘制坦克，测试阶段，以后改为循环访问，绘制所有坦克单位
 	pictures.drawJungle(map.GetAVal());//绘制丛林
 	pictures.drawBooms();//绘制爆炸贴图
-
-	FlushBatchDraw();//显示到屏幕
 }
 
 void Class_GameWindow::renewBullets()
 {
+	//for (size_t i = 0; i < bullets.size(); i++)
+	//{
+	//	if (bullets[i].renewXYPos())//如果补帧完成
+	//	{
+	//		//让子弹移动
+	//		if (bullets[i].move(bullets[i].GetDirection(), map))//如果移动后有体积碰撞
+	//		{
+	//			if (bullets[i].GetOwner() == P1)
+	//			{
+	//				p1_bullet_count--;
+	//			}
+	//			//删除这枚炮弹
+	//			bullets.erase(bullets.begin() + i);
+	//			i--;//发生删除时，容器中的元素数量会变少
+	//		}
+	//	}
+	//}
 	if (!bullets.empty())
 	{
 		for (auto it = bullets.begin(); it != bullets.end();)
 		{
 			if (it->renewXYPos())//如果补帧完成
 			{
-				//让子弹移动
+				//让炮弹移动
 				if (it->move(it->GetDirection(), map))//如果移动后有体积碰撞
 				{
 					if (it->GetOwner() == P1)
@@ -104,7 +154,7 @@ void Class_GameWindow::renewBullets()
 						p1_bullet_count--;
 					}
 					//修改地形、增加爆炸点，并且删除这枚炮弹
-					changeMap(*it);
+					destroyMap(*it);
 					pictures.addBoomPoint(it->GetBoomXYPos());
 					//pictures.addBoomPoint(it->GetBoomXYPos(), true);//测试大型爆炸用
 					it = bullets.erase(it);
@@ -117,7 +167,6 @@ void Class_GameWindow::renewBullets()
 }
 
 int Stage = 1;//设置当前关卡为第一关
-
 void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 {
 	UnitType type = unit.GetType();
@@ -224,7 +273,7 @@ void Class_GameWindow::shoot(const Class_Unit& tank)
 	bullets.push_back(Class_Bullet(tank));//创建一个子弹到容器中
 }
 
-void Class_GameWindow::changeMap(const Class_Bullet& bullet)
+void Class_GameWindow::destroyMap(const Class_Bullet& bullet)
 {
 	DestroyLev dLev = NoDestroy;
 	unsigned int owner = bullet.GetOwner();
@@ -235,34 +284,11 @@ void Class_GameWindow::changeMap(const Class_Bullet& bullet)
 	const MapInt(*check_points_val)[MapIndexCount] = bullet.GetCheckPointsVal();
 	const bool(*touch_flags)[LayerCount][MapIndexCount] = bullet.GetTouchFlags();
 
-	//Pos_RC map_pos[2] = { bullet.GetMapPos(), bullet.GetMapPos() };//获取两个检查点的坐标
-	//MapInt map_tmp[2] = { 0 };//保存检查点的地图数据
-
 	//如果碰撞点是边界，就直接退出这个函数
 	if (map.GetVal((*check_points_pos)[0]) == BORDER)
 	{
 		return;
 	}
-
-	//switch (dir)
-	//{
-	//	//根据方向调整第二个检测点的坐标
-	//case UP:
-	//case DOWN:
-	//	map_pos[1].col++;
-	//	break;
-	//case LEFT:
-	//case RIGHT:
-	//	map_pos[1].row++;
-	//	break;
-	//default:
-	//	break;
-	//}
-	////获取检查点的地图值
-	//for (size_t i = 0; i < 2; i++)
-	//{
-	//	map_tmp[i] = map.GetVal(map_pos[i]);
-	//}
 
 	//根据坦克的阵营和火力等级，确定毁灭地形的程度
 	if (owner == CP || owner == P1 && armorLev <= STRONG)
@@ -275,140 +301,9 @@ void Class_GameWindow::changeMap(const Class_Bullet& bullet)
 		dLev = AllDestroy;
 	}
 
-	////处理地形碰撞
-	////for (size_t i = 0; i < 2; i++)
-	////{
-	////	MapInt map_tmp = map.GetVal(map_pos[i]);
-	////	if (bullet.GetOwner() == CP)
-	////	{
-	////		if (map_tmp > EMPTY&& map_tmp <= WALL)
-	////		{
-	////			map.DestroyMap(map_pos[i], bullet.GetDirection(), HalfDestroy);
-	////		}
-	////		//map.DestroyMap(map_pos[i], bullet.GetDirection(), AllDestroy);
-	////		//map.SetVal(map_pos[i], 0);
-	////	}
-	////}
-
-	//if (dLev == HalfDestroy)
-	//{
-	//	bool des_flag[2][2] = { false };
-	//	//先检查炮弹是否会击中砖块的角落
-	//	switch (dir)
-	//	{
-	//	case UP:
-	//		//先检查第一层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF8)
-	//		{
-	//			des_flag[0][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF4)
-	//		{
-	//			des_flag[0][1] = true;
-	//		}
-	//		//再检查第二层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF2)
-	//		{
-	//			des_flag[1][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF1)
-	//		{
-	//			des_flag[1][1] = true;
-	//		}
-	//		break;
-	//	case LEFT:
-	//		//先检查第一层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF8)
-	//		{
-	//			des_flag[0][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF2)
-	//		{
-	//			des_flag[0][1] = true;
-	//		}
-	//		//再检查第二层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF4)
-	//		{
-	//			des_flag[1][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF1)
-	//		{
-	//			des_flag[1][1] = true;
-	//		}
-	//		break;
-	//	case DOWN:
-	//		//先检查第一层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF2)
-	//		{
-	//			des_flag[0][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF1)
-	//		{
-	//			des_flag[0][1] = true;
-	//		}
-	//		//再检查第二层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF8)
-	//		{
-	//			des_flag[1][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF4)
-	//		{
-	//			des_flag[1][1] = true;
-	//		}
-	//		break;
-	//	case RIGHT:
-	//		//先检查第一层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF4)
-	//		{
-	//			des_flag[0][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF1)
-	//		{
-	//			des_flag[0][1] = true;
-	//		}
-	//		//再检查第二层砖是否会被碰到
-	//		if (map_tmp[0] & 0xF8)
-	//		{
-	//			des_flag[1][0] = true;
-	//		}
-	//		if (map_tmp[1] & 0xF2)
-	//		{
-	//			des_flag[1][1] = true;
-	//		}
-	//		break;
-	//	default:
-	//		break;
-	//	}
-
-	//	bool flag_1 = false;//标记第一层砖是否已经发生碰撞
-	//	for (size_t iLayer = 0; iLayer < 2 && !flag_1; iLayer++)//用来区分砖块的两层
-	//	{
-	//		for (size_t iMap = 0; iMap < 2; iMap++)//用来区分两块砖
-	//		{
-	//			if (map_tmp[iMap] > EMPTY && map_tmp[iMap] <= BORDER)
-	//			{
-	//				if (des_flag[iLayer][iMap] == true)
-	//				{
-	//					flag_1 = true;//如果第一层就已经发生了碰撞，不会检查第二层砖
-	//					map.DestroyMap(map_pos[iMap], dir, dLev);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
-	//else if (dLev == AllDestroy)
-	//{
-	//	for (size_t i = 0; i < 2; i++)
-	//	{
-	//		if (map_tmp[i] > EMPTY && map_tmp[i] <= BORDER)
-	//		{
-	//			map.DestroyMap(map_pos[i], dir, dLev);
-	//		}
-	//	}
-	//}
-
 	//优化后的碰撞处理
 	bool flag_1 = false;//标记第一层砖是否已经发生碰撞
+	bool flag_headquarters = false;//记录指挥部是否被摧毁
 	for (size_t iLayer = 0; iLayer < 2 && !flag_1; iLayer++)//用来区分砖块的两层
 	{
 		for (size_t iMap = 0; iMap < 2; iMap++)//用来区分两块砖
@@ -421,19 +316,25 @@ void Class_GameWindow::changeMap(const Class_Bullet& bullet)
 					map.DestroyMap((*check_points_pos)[iMap], dir, dLev);
 				}
 			}
+			if (!flag_headquarters && (*check_points_val)[iMap] >= HEADQUARTERS_UL && (*check_points_val)[iMap] <= HEADQUARTERS_DR)
+			{
+				flag_headquarters = true;
+				map.DestroyHeadquarters();//摧毁指挥部
+
+				//添加一个大型爆炸
+				Pos_XY boom_pos = { (float)(BossPos.col - 1) * map_px,(float)(BossPos.row - 1) * map_px };
+				//增加一个坐标偏移，让爆炸点不会总是重合在一起
+				int xy_offset[2] = { 0 };//获取一个坐标偏移量
+				bool flag[2] = { false };//用来控制xy的坐标偏移采用加法还是减法
+				for (size_t i = 0; i < 2; i++)
+				{
+					flag[i] = rand() % 2;
+					xy_offset[i] = rand() % (source_map_px / 2) * px_multiple;
+				}
+				boom_pos.x += (float)pow(-1, flag[0]) * xy_offset[0];
+				boom_pos.y += (float)pow(-1, flag[1]) * xy_offset[1];
+				pictures.addBoomPoint(boom_pos, true);
+			}
 		}
 	}
 }
-
-//void HpSleep(int ms)
-//{
-//	static clock_t oldclock = clock();		// 静态变量，记录上一次 tick
-//
-//	oldclock += ms * CLOCKS_PER_SEC / 1000;	// 更新 tick
-//
-//	if (clock() > oldclock)					// 如果已经超时，无需延时
-//		oldclock = clock();
-//	else
-//		while (clock() < oldclock)			// 延时
-//			Sleep(1);						// 释放 CPU 控制权，降低 CPU 占用率
-//}
