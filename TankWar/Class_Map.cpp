@@ -123,6 +123,17 @@ void Class_Map::DestroyMap(const Pos_RC& map_pos, const Direction& dir, const De
 	}
 }
 
+void Class_Map::DestroyHeadquarters()
+{
+	for (int col = 0; col < 2; col++)
+	{
+		for (int row = 0; row < 2; row++)
+		{
+			map[BossPos.row + row][BossPos.col + col] = HEADQUARTERS_UL_FAIL + row + col;
+		}
+	}
+}
+
 void Class_Map::ChangeStage(unsigned int stage)
 {
 	loadmap(stage);

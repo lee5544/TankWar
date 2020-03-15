@@ -39,6 +39,8 @@ public:
 	void SetVal(const Pos_RC& map_pos, MapInt val);
 	//根据方向处理地形损坏情况
 	void DestroyMap(const Pos_RC& map_pos, const Direction& dir, const DestroyLev& dLev);
+	//摧毁指挥部
+	void DestroyHeadquarters();
 	//切换关卡的函数
 	void ChangeStage(unsigned int stage);
 
