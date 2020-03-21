@@ -31,18 +31,13 @@ class Class_Map
 public:
 	Class_Map();
 
-	//返回地图数组的首地址
-	const MapInt(*GetAVal())[map_row][map_col];
-	//返回指定地图行列的数值
-	MapInt GetVal(const Pos_RC& map_pos)const;
-	//修改地图上的数值
-	void SetVal(const Pos_RC& map_pos, MapInt val);
-	//根据方向处理地形损坏情况
-	void DestroyMap(const Pos_RC& map_pos, const Direction& dir, const DestroyLev& dLev);
-	//摧毁指挥部
-	void DestroyHeadquarters();
-	//切换关卡的函数
-	void ChangeStage(unsigned int stage);
+	const MapInt(*GetAVal())[map_row][map_col];//返回地图数组的首地址
+	MapInt GetVal(const Pos_RC& map_pos)const;//返回指定地图行列的数值
+	void SetVal(const Pos_RC& map_pos, MapInt val);//修改地图上的数值
+	void DestroyMap(const Pos_RC& map_pos, const Direction& dir, 
+		const DestroyLev& dLev);//根据方向处理地形损坏情况
+	void DestroyHeadquarters();//摧毁指挥部
+	void ChangeStage(unsigned int stage);//切换关卡的函数
 
 private:
 	MapInt map[map_row][map_col];//保存地图数据的数组

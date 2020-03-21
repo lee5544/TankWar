@@ -15,8 +15,7 @@ Class_GamePic::Class_GamePic()
 	//调整窗口
 	initgraph(gamewindow_width, gamewindow_height, NOCLOSE);//初始化绘图界面
 	HWND hWnd = GetHWnd();//获取窗口句柄
-	SetWindowText(hWnd, _T("牛B闪闪坦克大战——by名侦探毛利小五郎（腾讯课堂奇牛学院）"));
-	//SetWindowText(hWnd, _T("坦克大战"));
+	SetWindowText(hWnd, _T("廖霞的坦克大战"));
 
 	//设置窗口相对于桌面居中
 	//获得屏幕尺寸
@@ -36,7 +35,6 @@ Class_GamePic::Class_GamePic()
 		bkHSL[i] = min_val[i];
 		fontHSL[i] = bkHSL[i] + font_to_bk[i];
 	}
-
 
 	//加载图片
 	IMAGE tmp;//加载大图用的临时对象
@@ -129,15 +127,11 @@ Class_GamePic::Class_GamePic()
 	Resize(&logoPic_effects, source_map_px * logo_col, source_map_px * logo_row);//设置logo的宽高
 	rect = { 0,0,logo_col * source_map_px - 1,logo_row * source_map_px - 1 };
 	setfillcolor(WHITE);
-	//drawtext(_T("牛B闪闪\n坦克大战"), &rect, DT_CENTER);
 	drawtext(_T("\n坦克大战"), &rect, DT_CENTER);
 
 	SetWorkingImage(&logoPic_effects);//准备填充砖块
-	//setfillstyle(BS_DIBPATTERN, NULL, &mapPic_effects[FileNum_wall]);//设置砖块为填充图形
-	//solidrectangle(0, 0, getwidth() - 1, getheight() - 1);
 	fill_image(logoPic_effects, mapPic_effects[FileNum_wall]);
 	putimage(0, 0, &logoPic, SRCAND);
-	//putimage(0, 0, &logoPic, SRCPAINT);
 
 
 	//恢复默认工作区为窗口
@@ -146,7 +140,6 @@ Class_GamePic::Class_GamePic()
 	settextcolor(HSLtoRGB(fontHSL[0], fontHSL[1], fontHSL[2]));
 	gettextstyle(&f);                     // 获取当前字体设置
 	f.lfQuality = ANTIALIASED_QUALITY;    // 设置输出效果为抗锯齿  
-	//f.lfHeight = (source_map_px * 2 / 3) * 2;//字体高度
 	f.lfHeight = source_map_px;//字体高度
 	_tcscpy_s(f.lfFaceName, _T("楷体"));    // 设置字体为“楷体”(高版本 VC 推荐使用 _tcscpy_s 函数)
 	f.lfWeight = FW_BOLD;				//粗体
@@ -172,52 +165,12 @@ void Class_GamePic::drawTank(const Class_Tank& tank)
 	Armor armor = tank.GetArmorLev();
 	Direction dir = tank.GetDirection();
 	Camp camp = type == CP ? CampComputerPlayer : CampPlayer;//根据单位类型得出阵营
-	//putimage(px_pos.x, px_pos.y, &tankPic[camp][armor][dir][0]);//调试阶段，履带动态特效未实现，且不能透明贴图
-	//transparentimage(NULL, px_pos.x, px_pos.y, &tankPic[camp][armor][dir][0]);
-	//half_transparentimage(NULL, px_pos.x, px_pos.y, &tankPic[camp][armor][dir][0]);//没有实现履带切换的特效
 	half_transparentimage(NULL, (int)px_pos.x, (int)px_pos.y, &tankPic_effects[camp][armor][dir][tank.GetTrackState()]);
 }
 
-// 透明贴图函数
-// 参数：
-//		dstimg: 目标 IMAGE 对象指针。NULL 表示默认窗体
-//		x, y:	目标贴图位置
-//		srcimg: 源 IMAGE 对象指针。NULL 表示默认窗体
-//		transparentcolor: 透明色。srcimg 的该颜色并不会复制到 dstimg 上，从而实现透明贴图
-//void Class_GamePic::transparentimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
-//{
-//	// 变量初始化
-//	DWORD* dst = GetImageBuffer(dstimg);
-//	DWORD* src = GetImageBuffer(srcimg);
-//	int src_width = srcimg->getwidth();
-//	int src_height = srcimg->getheight();
-//	int dst_width = (dstimg == NULL ? getwidth() : dstimg->getwidth());
-//	int dst_height = (dstimg == NULL ? getheight() : dstimg->getheight());
-//
-//	// 计算贴图的实际长宽
-//	int iwidth = (x + src_width > dst_width) ? dst_width - x : src_width;
-//	int iheight = (y + src_height > dst_height) ? dst_height - y : src_height;
-//
-//	// 修正贴图起始位置
-//	dst += dst_width * y + x;
-//
-//	// 实现透明贴图
-//	for (int iy = 0; iy < iheight; iy++)
-//	{
-//		for (int ix = 0; ix < iwidth; ix++)
-//		{
-//			if ((src[ix] & 0xff000000))//绘制透明度不等于0的像素（非半透明绘图，有些地方图片可能失真，呈现黑色）
-//			//if ((src[ix] & 0xff000000) == 0xff000000)//只绘制透明度为0的像素（非半透明绘图，有些区域可能被扣除，变成背景色）
-//				dst[ix] = src[ix];
-//		}
-//		dst += dst_width;
-//		src += src_width;
-//	}
-//}
-
+// 半透明贴图函数
 void Class_GamePic::half_transparentimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
 {
-	// 半透明贴图函数
 	// 参数：
 	//		dstimg：目标 IMAGE（NULL 表示默认窗体）
 	//		x, y:	目标贴图位置
@@ -236,58 +189,9 @@ void Class_GamePic::half_transparentimage(IMAGE* dstimg, int x, int y, IMAGE* sr
 	int i_dst_height = (y + src_height * px_multiple > dst_height) ? dst_height - y : src_height * px_multiple;	// 处理超出下边界
 	if (x < 0) { src += -x / px_multiple;				i_dst_width -= -x;	x = 0; }				// 处理超出左边界
 	if (y < 0) { src += src_width * (-y / px_multiple);	i_dst_height -= -y;	y = 0; }				// 处理超出上边界
-	//int iwidth = (x + src_width > dst_width) ? dst_width - x : src_width;		// 处理超出右边界
-	//int iheight = (y + src_height > dst_height) ? dst_height - y : src_height;	// 处理超出下边界
-	//if (x < 0) { src += -x;				iwidth -= -x;	x = 0; }				// 处理超出左边界
-	//if (y < 0) { src += src_width * -y;	iheight -= -y;	y = 0; }				// 处理超出上边界
 
 	// 修正目标贴图区起始位置
 	dst += dst_width * y + x;
-
-	//// 实现透明贴图
-	//for (int iy = 0; iy < iheight; iy++)
-	//{
-	//	for (int ix = 0; ix < iwidth; ix++)
-	//	{
-	//		int sa = ((src[ix] & 0xff000000) >> 24);
-	//		int sr = ((src[ix] & 0xff0000) >> 16);	// 源值已经乘过了透明系数
-	//		int sg = ((src[ix] & 0xff00) >> 8);		// 源值已经乘过了透明系数
-	//		int sb = src[ix] & 0xff;				// 源值已经乘过了透明系数
-	//		int dr = ((dst[ix] & 0xff0000) >> 16);
-	//		int dg = ((dst[ix] & 0xff00) >> 8);
-	//		int db = dst[ix] & 0xff;
-
-	//		dst[ix] = ((sr + dr * (255 - sa) / 255) << 16)
-	//			| ((sg + dg * (255 - sa) / 255) << 8)
-	//			| (sb + db * (255 - sa) / 255);
-	//	}
-	//	dst += dst_width;
-	//	src += src_width;
-	//}
-
-	//// 实现透明贴图
-	//for (int iy = 0; iy < iheight / px_multiple; iy++)//控制实际绘制高度
-	//{
-	//	for (int multiple = 0; multiple < px_multiple; multiple++)//受缩放因子影响，原来的一行需要绘制px_multiple次，实现纵向缩放
-	//	{
-	//		for (int ix = 0; ix < iwidth; ix++)
-	//		{
-	//			int sa = ((src[ix / px_multiple] & 0xff000000) >> 24);
-	//			int sr = ((src[ix / px_multiple] & 0xff0000) >> 16);	// 源值已经乘过了透明系数
-	//			int sg = ((src[ix / px_multiple] & 0xff00) >> 8);		// 源值已经乘过了透明系数
-	//			int sb = src[ix / px_multiple] & 0xff;				// 源值已经乘过了透明系数
-	//			int dr = ((dst[ix] & 0xff0000) >> 16);
-	//			int dg = ((dst[ix] & 0xff00) >> 8);
-	//			int db = dst[ix] & 0xff;
-
-	//			dst[ix] = ((sr + dr * (255 - sa) / 255) << 16)
-	//				| ((sg + dg * (255 - sa) / 255) << 8)
-	//				| (sb + db * (255 - sa) / 255);
-	//		}
-	//		dst += dst_width;
-	//	}
-	//	src += src_width;
-	//}
 
 	//实现透明贴图（有放大倍数）
 	for (int sy = 0; sy < i_dst_height / px_multiple; sy++)
@@ -328,8 +232,6 @@ void Class_GamePic::drawSea(int x, int y)
 	static int num = FileNum_sea1;
 	static DWORD timer = Class_Timer::GetGameTime();//计时器
 	DWORD now = Class_Timer::GetGameTime();
-	//static DWORD timer = timeGetTime();//计时器
-	//DWORD now = timeGetTime();
 
 	//每1秒切换一次图片
 	if (now - timer >= 1000)
@@ -400,12 +302,6 @@ void Class_GamePic::fill_image(IMAGE& dstimg, const IMAGE& srcimg)
 		//把tmp中的内容，看作多行，填充到dstimg
 		putimage(0, i_row * src_height, &tmp);
 	}
-
-	////测试语句，查看tmp和dstimg中的图像
-	//SetWorkingImage();
-	//putimage(0, 0, &tmp);
-	//putimage(0, 16, &dstimg);
-	//FlushBatchDraw();
 }
 
 void Class_GamePic::drawBullet(Class_Bullet& bullet)
@@ -430,12 +326,6 @@ void Class_GamePic::drawBooms()
 
 void Class_GamePic::drawLogo(bool effect)
 {
-	//half_transparentimage(NULL, pos.x, pos.y, &logoPic_effects);
-	//half_transparentimage(NULL, (map_col - logo_col) / 2 * map_px, 2 * map_px, &logoPic_effects);
-	//putimage((map_col - logo_col) / 2 * source_map_px, 2 * source_map_px, &logoPic);
-	//putimage((map_col - logo_col) / 2 * source_map_px, 2 * source_map_px, &logoPic, NOTSRCCOPY);//逆波兰表示法：Sn
-	//putimage((map_col - logo_col) / 2 * source_map_px, 2 * source_map_px, &logoPic_effects);
-	//putimage(0, 0, mapPic_effects + FileNum_wall);//测试用，绘制原始砖块
 	if (effect)
 	{
 		//先处理保存logo的图形对象
@@ -534,15 +424,15 @@ void Class_GamePic::drawMap(const MapInt(*map)[map_row][map_col])
 			}
 		}
 	}
-	////绘制BOSS
-	//if ((*map)[BossPos.row][BossPos.col]==0xC8)
-	//{
-	//	half_transparentimage(NULL, BossPos.col * map_px, BossPos.row * map_px, bossPic_effects + BossAlive);
-	//}
-	//else
-	//{
-	//	half_transparentimage(NULL, BossPos.col * map_px, BossPos.row * map_px, bossPic_effects + BossDead);
-	//}
+	//绘制BOSS
+	if ((*map)[BossPos.row][BossPos.col]==0xC8)
+	{
+		half_transparentimage(NULL, BossPos.col * map_px, BossPos.row * map_px, bossPic_effects + BossAlive);
+	}
+	else
+	{
+		half_transparentimage(NULL, BossPos.col * map_px, BossPos.row * map_px, bossPic_effects + BossDead);
+	}
 
 	//额外信息
 	RECT r = { 2 * source_map_px - 1, 0, 20 * source_map_px - 1, 2 * source_map_px - 1 };
@@ -575,31 +465,6 @@ void Class_GamePic::drawJungle(const MapInt(*map)[map_row][map_col])
 
 void Class_GamePic::renewBkColor()
 {
-	//const int step = 4;//颜色变化的步长上限
-	//static unsigned char color[3] = { 0 };//保存RGB颜色数据
-	//unsigned char increment[3];//保存RGB色的增量
-	//static bool flag[3] = { 0 };//控制颜色是加还是减，0加，1减
-
-	//int tmp = step;
-	//for (size_t i = 0; i < 3; i++)
-	//{
-	//	//控制颜色的增量
-	//	//increment[i] = rand() % step;//黑白切换
-	//	increment[i] = rand() % tmp;
-	//	tmp -= increment[i];
-	//}
-	//for (size_t i = 0; i < 3; i++)
-	//{
-	//	int color_tmp = color[i] + (int)pow(-1, flag[i]) * increment[i];
-	//	if (color_tmp >= 256 || color_tmp < 0)
-	//	{
-	//		flag[i] = !flag[i];//翻转
-	//	}
-	//	color[i] += (unsigned char)pow(-1, flag[i]) * increment[i];//修改RGB色的数据，flag控制颜色数值是减还是加
-	//	//color[i] += flag[i] * increment[i];//修改RGB色的数据，flag控制颜色数值是否增加
-	//}
-	//setbkcolor(RGB(color[0], color[1], color[2]));
-
 	const int step = 233;//颜色变化的步长上限
 	static bool flag[3] = { 0 };//控制饱和度、亮度是加还是减，0加，1减
 	const float multiple[3] = { 222,33333,66666 };//控制步长倍率
@@ -631,10 +496,6 @@ void Class_GamePic::renewEffects()
 			break;
 		case FileNum_border:
 			break;
-			//case FileNum_sea0:
-			//	break;
-			//case FileNum_sea1:
-			//	break;
 		case FileNum_ice:
 			break;
 		default:

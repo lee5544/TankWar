@@ -148,12 +148,11 @@ void Class_Map::loadmap(unsigned int stage)
 	TCHAR tmp_map[_MAX_PATH];
 	::GetTempPath(_MAX_PATH, tmp_map);
 	//_tcscat(tmp_map, _T("map.txt"));
-	wcscat_s(tmp_map, _T("map.txt"));
+	//wcscat_s(tmp_map, _T("map.txt"));
+	lstrcat(tmp_map, _T("map.txt"));
 	// 将 MAP 资源提取为临时文件
 	ExtractResource(tmp_map, _T("MAP"), _T("map"));
 
-	//temp = map_file_path;
-	//temp += map_file_name;
 	temp = tmp_map;
 	map_file.open(temp);
 	if (!map_file.is_open())

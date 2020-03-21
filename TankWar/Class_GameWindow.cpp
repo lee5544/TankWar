@@ -123,23 +123,6 @@ void Class_GameWindow::renewGamePic()
 
 void Class_GameWindow::renewBullets()
 {
-	//for (size_t i = 0; i < bullets.size(); i++)
-	//{
-	//	if (bullets[i].renewXYPos())//如果补帧完成
-	//	{
-	//		//让子弹移动
-	//		if (bullets[i].move(bullets[i].GetDirection(), map))//如果移动后有体积碰撞
-	//		{
-	//			if (bullets[i].GetOwner() == P1)
-	//			{
-	//				p1_bullet_count--;
-	//			}
-	//			//删除这枚炮弹
-	//			bullets.erase(bullets.begin() + i);
-	//			i--;//发生删除时，容器中的元素数量会变少
-	//		}
-	//	}
-	//}
 	if (!bullets.empty())
 	{
 		for (auto it = bullets.begin(); it != bullets.end();)
@@ -166,7 +149,6 @@ void Class_GameWindow::renewBullets()
 	}
 }
 
-int Stage = 1;//设置当前关卡为第一关
 void Class_GameWindow::ctrl(Class_Unit& unit, Class_Map& map)
 {
 	UnitType type = unit.GetType();

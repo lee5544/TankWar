@@ -20,36 +20,22 @@ class Class_Bullet :
 public:
 	Class_Bullet(const Class_Unit& tank);
 
-	//子弹向前移动一步，如果发生地形碰撞，返回true
-	virtual bool move(Direction dir, const Class_Map& map);
-	//获取移动速度
-	virtual float GetSpeed()const;
-	//判断子弹是否发生碰撞，false代表无碰撞，true表示碰撞
-	virtual bool ifTouch(const Class_Map& map);
-	//获取子弹的所有者
-	unsigned int GetOwner()const;
+	virtual bool move(Direction dir, const Class_Map& map);//子弹向前移动一步，如果发生地形碰撞，返回true
+	virtual float GetSpeed()const;//获取移动速度
+	virtual bool ifTouch(const Class_Map& map);//判断子弹是否发生碰撞，false代表无碰撞，true表示碰撞
+	unsigned int GetOwner()const;//获取子弹的所有者
 
-	/*****************
-	碰撞检查相关的接口
-	*****************/
-	//获取检查点坐标
-	const Pos_RC (*GetCheckPointsPos()const)[MapIndexCount];
-	//获取检查点的值
-	const MapInt(*GetCheckPointsVal()const)[MapIndexCount];
-	//获取地形碰撞标记
-	const bool(*GetTouchFlags()const)[LayerCount][MapIndexCount];
-	//获取爆炸贴图的坐标
-	virtual const Pos_XY GetBoomXYPos()const;
+	/*********碰撞检查相关的接口*********/
+	const Pos_RC (*GetCheckPointsPos()const)[MapIndexCount];//获取检查点坐标
+	const MapInt(*GetCheckPointsVal()const)[MapIndexCount];//获取检查点的值
+	const bool(*GetTouchFlags()const)[LayerCount][MapIndexCount];//获取地形碰撞标记
+	virtual const Pos_XY GetBoomXYPos()const;//获取爆炸贴图的坐标
 
 protected:
-	//刷新检查点
-	void renewCheckPoints(const Class_Map& map);
-	//刷新检查点坐标
-	void renewCheckPointsPos();
-	//刷新检查点数值
-	void renewCheckPointsVal(const Class_Map& map);
-	//刷新碰撞检查标记
-	void renewTouchFlags();
+	void renewCheckPoints(const Class_Map& map);//刷新检查点
+	void renewCheckPointsPos();//刷新检查点坐标
+	void renewCheckPointsVal(const Class_Map& map);//刷新检查点数值
+	void renewTouchFlags();//刷新碰撞检查标记
 
 private:
 	UnitType owner;//用来区分每一颗炮弹是谁发射的

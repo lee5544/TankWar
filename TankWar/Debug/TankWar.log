@@ -1,0 +1,19 @@
+﻿  Class_Bullet.cpp
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(13,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(17,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(22,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(23,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(28,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(29,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(334,34): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+  Class_GamePic.cpp
+  Class_GameWindow.cpp
+  Class_Map.cpp
+  Class_Player.cpp
+  Class_Tank.cpp
+  Class_Timer.cpp
+  Class_Unit.cpp
+  main.cpp
+  正在生成代码...
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(335,34): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+  TankWar.vcxproj -> C:\GitProject\TankWar\Debug\TankWar.exe

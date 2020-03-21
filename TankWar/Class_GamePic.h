@@ -16,9 +16,7 @@ enum MapFileNum//图片文件编号
 	FileNum_wall, FileNum_iron, FileNum_border, FileNum_sea0, FileNum_sea1, FileNum_ice, FileNum_jungle, MapFileCount
 };
 
-/***************
-爆炸贴图相关参数
-***************/
+/***************爆炸贴图相关参数***************/
 const unsigned int boom_pic_count = 5;//总的爆炸贴图数目
 const unsigned int small_boom_count = 3;//小型爆炸需要用到的图片数量
 const unsigned int big_boom_count = boom_pic_count;//大型爆炸需要用到的图片数量
@@ -32,6 +30,7 @@ typedef struct//爆炸贴图需要的数据
 	DWORD add_time;//记录该爆炸点的时间（根据时间选择绘制图片）
 	Pos_XY pos;//记录爆炸绘图坐标
 }BoomPoint;
+
 enum BossState//BOSS的状态
 {
 	BossAlive, BossDead, BossStateCount
@@ -44,47 +43,27 @@ public:
 	Class_GamePic();
 	~Class_GamePic();
 
-	/******************
-	基本贴图绘制接口
-	******************/
-	//绘制坦克
-	void drawTank(const Class_Tank& tank);
-	//绘制地图
-	void drawMap(const MapInt(*map)[map_row][map_col]);
-	//绘制丛林
-	void drawJungle(const MapInt(*map)[map_row][map_col]);
-	//绘制炮弹
-	void drawBullet(Class_Bullet& bullet);
-	//绘制爆炸贴图
-	void drawBooms();
-	//绘制logo图片
-	void drawLogo(bool effect = true);
+	/**********基本贴图绘制接口**********/
+	void drawTank(const Class_Tank& tank);//绘制坦克
+	void drawMap(const MapInt(*map)[map_row][map_col]);//绘制地图
+	void drawJungle(const MapInt(*map)[map_row][map_col]);//绘制丛林
+	void drawBullet(Class_Bullet& bullet);//绘制炮弹
+	void drawBooms();//绘制爆炸贴图
+	void drawLogo(bool effect = true);//绘制logo图片
 
-	/******************
-	爆炸贴图相关接口
-	******************/
-	//新增一个爆炸点，pos是绘图坐标，state：false是小爆炸，true是大爆炸
-	void addBoomPoint(const Pos_XY& pos, bool state = false);
+	/**********爆炸贴图相关接口**********/
+	void addBoomPoint(const Pos_XY& pos, bool state = false);//新增一个爆炸点，pos是绘图坐标，state：false是小爆炸，true是大爆炸
 
-	/******************
-	牛B闪闪特效相关接口
-	******************/
-	//平滑地变化背景色
-	void renewBkColor();
-	//转换所有图片的颜色
-	void renewEffects();
+	/**********特效相关接口**********/
+	void renewBkColor();//平滑地变化背景色
+	void renewEffects();//转换所有图片的颜色
 
 protected:
-	//半透明贴图
-	void half_transparentimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);
-	//根据当前背景色，修改图片素材的颜色
-	void changeEffects(IMAGE* dstimg, IMAGE* srcimg);
-	//绘制海面（动态效果）
-	void drawSea(int x, int y);
-	//刷新爆炸点的容器数据（超过显示时间的节点需要删除）
-	void renewBoomPoints();
-	//用一个图像填充另一个图形对象
-	void fill_image(IMAGE& dstimg, const IMAGE& srcimg);
+	void half_transparentimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);//半透明贴图
+	void changeEffects(IMAGE* dstimg, IMAGE* srcimg);//根据当前背景色，修改图片素材的颜色
+	void drawSea(int x, int y);//绘制海面（动态效果）
+	void renewBoomPoints();//刷新爆炸点的容器数据（超过显示时间的节点需要删除）
+	void fill_image(IMAGE& dstimg, const IMAGE& srcimg);//用一个图像填充另一个图形对象
 
 private:
 	IMAGE tankPic[CampCount][ArmorCount][DirectionCount][2];//坦克图片，角标从左到右分别为：阵营、装甲等级、方向、履带切换

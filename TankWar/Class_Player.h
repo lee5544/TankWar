@@ -8,12 +8,10 @@ class Class_Player :
 	public Class_Tank
 {
 public:
-	Class_Player(Pos_RC map_px = P1_born_pos, UnitType typ = P1, Direction dir = UP, Armor Lev = NORMAL);
+	Class_Player(Pos_RC map_px = P1_born_pos, UnitType typ = P1, 
+		Direction dir = UP, Armor Lev = NORMAL);
 
-	/**********
-	Get系列函数
-	**********/
-	//获取移动速度
-	virtual float GetSpeed()const;
+	/**********Get系列函数**********/
+	virtual float GetSpeed()const;//获取移动速度
 };
 

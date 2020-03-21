@@ -12,22 +12,11 @@ private:
 public:
 	Class_Tank(Pos_RC map_pos, UnitType type, Direction dir = DOWN, Armor Lev = NORMAL);
 
-	/**********
-	Get系列函数
-	**********/
-	//获取履带状态
-	bool GetTrackState()const;
+	/**********Get系列函数**********/
+	bool GetTrackState()const;//获取履带状态
 
-	/********************
-	控制函数（坦克行走等）
-	********************/
-	//坦克移动
-	virtual bool move(Direction dir, const Class_Map& map);
-	//判断坦克是否发生碰撞，false代表无碰撞，true表示碰撞
-	//bool ifTouch(const Class_Map & map)const;
-	//刷新坦克绘图坐标，返回true代表坦克可以接受控制
-	//bool renewXYPos();
-	//切换履带显示，flag表示是否接收到切换信号，true表示需要切换
-	void renewTrackState();
+	/**********控制函数（坦克行走等）***********/
+	virtual bool move(Direction dir, const Class_Map& map);//坦克移动
+	void renewTrackState();//切换履带显示，flag表示是否接收到切换信号，true表示需要切换
 };
 

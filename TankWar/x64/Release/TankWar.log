@@ -1,0 +1,8 @@
+﻿  Class_Map.cpp
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(140,71): error C2664: “int WideCharToMultiByte(UINT,DWORD,LPCWCH,int,LPSTR,int,LPCCH,LPBOOL)”: 无法将参数 3 从“TCHAR *”转换为“LPCWCH”
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(140,43): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\stringapiset.h(141,1): message : 参见“WideCharToMultiByte”的声明
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(142,65): error C2664: “int WideCharToMultiByte(UINT,DWORD,LPCWCH,int,LPSTR,int,LPCCH,LPBOOL)”: 无法将参数 3 从“TCHAR *”转换为“LPCWCH”
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(142,33): message : 与指向的类型无关；强制转换要求 reinterpret_cast、C 样式强制转换或函数样式强制转换
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\stringapiset.h(141,1): message : 参见“WideCharToMultiByte”的声明
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(166,2): error C3861: “wnscpy”: 找不到标识符

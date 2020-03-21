@@ -8,8 +8,6 @@
 
 using std::vector;
 
-//const unsigned int max_player_bullets = 2;//玩家同时发射的子弹数量上限
-//const unsigned int normal_player_bullets = 1;
 const unsigned int max_player_bullets = 6;//玩家同时发射的子弹数量上限（翻倍畅玩版）
 const unsigned int normal_player_bullets = 3;
 
@@ -22,15 +20,15 @@ private:
 	vector<Class_Bullet> bullets;//保存所有的子弹
 	unsigned int p1_bullet_count;//记录1P已经发射的炮弹数
 	int game_state;//游戏状态（1代表正在游戏中，0代表游戏未开始）
+	int Stage = 1;//设置当前关卡为第一关
 
 public:
 	Class_GameWindow();
 	void gameWindow();//进入游戏窗口的循环
-	//开始游戏
-	void play();
+	void play();//开始游戏
 
 protected:
-	void renewPic(bool effects = true);//刷新画面，effects代表是否使用牛B闪闪特效
+	void renewPic(bool effects = true);//刷新画面，effects代表是否使用特效
 	void renewGamePic();//刷新游戏界面
 	void renewBullets();//刷新子弹状态
 	void renewStartPic();//刷新游戏开始界面

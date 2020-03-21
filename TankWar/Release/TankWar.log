@@ -1,0 +1,36 @@
+﻿  Class_Bullet.cpp
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(13,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(17,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(22,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(23,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(28,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(29,41): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(334,34): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+  Class_GamePic.cpp
+  Class_GameWindow.cpp
+  Class_Map.cpp
+C:\GitProject\TankWar\TankWar\Class_Bullet.cpp(335,34): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(156,16): error C2679: 二进制“=”: 没有找到接受“TCHAR [260]”类型的右操作数的运算符(或没有可接受的转换)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2680,19): message : 可能是“std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>::operator =(const _Elem)”
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2680,19): message :         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2680,19): message :         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2680,19): message :             _Elem=wchar_t
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2680,19): message :         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2676,19): message : 或    “std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>::operator =(const _Elem *const )”
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2676,19): message :         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2676,19): message :         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2676,19): message :             _Elem=wchar_t
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2676,19): message :         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2661,19): message : 或    “std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>::operator =(const std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &)”
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2560,19): message : 或    “std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>::operator =(std::initializer_list<_Elem>)”
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2560,19): message :         with
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2560,19): message :         [
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2560,19): message :             _Elem=wchar_t
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2560,19): message :         ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\xstring(2459,19): message : 或    “std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>::operator =(std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>> &&) noexcept(<expr>)”
+  Class_Player.cpp
+  Class_Tank.cpp
+  Class_Timer.cpp
+  Class_Unit.cpp
+  main.cpp
+C:\GitProject\TankWar\TankWar\Class_Map.cpp(156,16): message : 尝试匹配参数列表“(std::wstring, TCHAR [260])”时
